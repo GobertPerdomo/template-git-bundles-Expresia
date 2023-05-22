@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<script
+  src="https://code.jquery.com/jquery-3.5.0.min.js"
+  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+  crossorigin="anonymous"></script>
+
+<head>
+    <title>Bundles 2.0 Demo Repo</title>
+    <link rel="stylesheet" href="{{{WebRoot xpr.bundle}}}/css/pure-min.css">
+    <link rel="stylesheet" href="{{{WebRoot xpr.bundle}}}/css/side-menu.css">
+    <link rel="stylesheet" href="{{{WebRoot xpr.bundle}}}/css/devon-custom.css">
+</head>
+<body>
+<div id="layout">
+    <!-- Menu toggle -->
+    <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+    </a>
+    <div id="menu">
+        <div class="pure-menu">
+            <a class="pure-menu-heading" href="#">Bundles 2.0</a>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item"><a href="#entry-point" class="pure-menu-link">Entry Point</a></li>
+                <li class="pure-menu-item"><a href="#inline-media" class="pure-menu-link">Bundle Web Directory</a></li>
+                <li class="pure-menu-item"><a href="#xpr-context" class="pure-menu-link">Request Context</a></li>
+                <li class="pure-menu-item"><a href="#about-element" class="pure-menu-link">About Element</a></li>
+                <li class="pure-menu-item"><a href="#attached-data" class="pure-menu-link">Attached Data</a></li>
+                <li class="pure-menu-item"><a href="#context-passing" class="pure-menu-link">Context Passing</a></li>
+                <li class="pure-menu-item"><a href="#element-options" class="pure-menu-link">Element Options</a></li>
+                <li class="pure-menu-item"><a href="#ssjs-binding" class="pure-menu-link">SSJS - Element Binding</a></li>
+                <li class="pure-menu-item"><a href="#ssjs-binding-ds" class="pure-menu-link">SSJS - Datasource Binding</a></li>
+                <li class="pure-menu-item"><a href="#bundle-routes" class="pure-menu-link">Bundle Routes</a></li>
+                <!-- <li class="pure-menu-item"><a href="#element-options" class="pure-menu-link">SSJS - Datasource Attached</a></li> -->
+            </ul>
+        </div>
+    </div>
+
+    <div id="main">
+        <div class="header">
+            <div>
+            <a class="" target="_blank" href="https://expression.cloud"><img src="{{{WebRoot xpr.bundle}}}/img/xpr.png"></a>
+            </div>
+            <h1>Bundles 2.0 Demo Repo</h1>
+            <div>
+            <a class="gitlab_link" target="_blank" href="https://github.com/expressioncloud/bundles-demo"><img src="{{{WebRoot xpr.bundle}}}/img/GitHub_Logo.png"></a>
+            </div>
+            <p class="sagan-quote">"Imagination will often carry us to worlds that never were. But without it we go nowhere" - Carl Sagan</p>
+        </div>
+
+        <div class="content">
+            <h2 id="bonjour" class="content-subhead devon-strong">Bonjour!</h2>
+            <p>
+            Welcome to the Bundles 2.0 Live Demo. The main audience for this demo is existing developers working within Expression looking for a "crash course" on the new stuff Bundles 2.0 provides - and analogues to existing techniques that will be familiar to individuals with experience developing within Expression.
+            </p>
+            <p>
+            If you're not familiar with Expression - find us over at <a href="https://expression.cloud">expression.cloud</a>. Expression is a fully customizable SaaS CMS, Digital Commerce, and Development Platform that empowers developers and marketers to build amazing digital experiences together. Bundles are just one part of that experience so if you've stumbled upon us, take a look - If you've been looking for an alternative to Wordpress, Drupal, Magento, and all the usual suspects, you've found what you're looking for.
+            </p>
+            
+            <h2 id="entry-point" class="content-subhead devon-strong">Entry Point</h2>
+
+            <p>
+            This page, like all pages in Expression, is rendered with an <code>Element</code>.  An Element is an HTML template for marking up data pulled from Datasources, used to render blocks of content. Elements are based on the Handlebars templating language. Elements can reference other Elements, allowing for modular markup construction
+            </p>
+            <p>
+                The Element rendering this page <code>(template.hbs)</code> can be viewed in GitHub here: {{{XprElement bundlePath="git_link" options.path="xpr/element/template.hbs"}}}
+            </p>
+            <p>
+                Each Element can optionally have a configuration file. The configuration for this Element can be viewed in GitHub here: {{{XprElement bundlePath="git_link" options.path="xpr/element_config/template.json"}}}
+            </p>
+
+            <div class="devon-example">
+                {{=<% %>=}}
+                <p>
+                    This page is using Elements to render links to files in GitHub: {{{XprElement bundlePath="git_link" options.path="xpr/element/git_link.hbs"}}}. 
+                </p>
+                <%={{ }}=%>
+                <div><strong>Output:</strong></div>
+                <p>
+                    <code>{{{XprElement bundlePath="git_link" options.path="xpr/element/git_link.hbs"}}}. </code>
+                </p>
+            </div>
+        
+            <!---------------------------------------->
+            <!---------------------------------------->
+
+            <h2 id="inline-media" class="content-subhead devon-strong">Bundle Web Directory</h2>
+            <img src="{{{WebRoot xpr.bundle}}}/img/cool_room.jpeg"></img>
+            <p>Bundles can now include static media. This is great for custom images or assets which should be developer managed, rather than client managed. Static media lives in the bundle's web directory: {{{XprElement bundlePath="git_link" options.path="xpr/web/"}}}</p>
+            <p>
+
+            <h3>Using for CSS and JS</h3>
+            {{=<% %>=}}
+            This is how we include the CSS and JS for this bundle: <code>href="{{{WebRoot xpr.bundle}}}/css/devon-custom.css"</code>
+            <%={{ }}=%>
+            </p>
+            <p>
+            Developers may be interested in using this feature to use CSS/JS compilers or js package managers to compile custom css, and place the end result in the <code>/xpr/web/</code> directory.
+            </p>
+
+            <h2 id="xpr-context" class="content-subhead devon-strong">Request Context</h2>
+
+                <p> Let's see how you can dump context variables using the <code>XprJson</code>. We will dump the <code>xpr</code> variable</p>. This is the same <code>xpr</code> variable you may be used to from working with <a href="https://www.expression.cloud/docs-and-help/documentation/#render-context">Elements</a> in traditional Bundles.
+                <p>
+                <div class="devon-example">
+                {{=<% %>=}}
+                <code>
+                {{{XprJson xpr}}}
+                </code>
+                <%={{ }}=%>
+                </p>
+                <div><strong>Output:</strong></div>
+                <div class="demo-code">
+                <code>
+                {{XprJson xpr}}
+                </code>
+                </div>
+            </div>
+
+            <!---------------------------------------->
+            <!---------------------------------------->
+
+            <h2 id="about-element" class="content-subhead devon-strong">About Element</h2>
+            {{=<% %>=}}
+            <p> Demonstrates using <code>{{{XprElement}}}</code> to pull in an Element</p>
+            <%={{ }}=%>
+            <p>
+                The code for this Element <code>(about.hbs)</code> can be viewed in GitHub here: {{{XprElement bundlePath="git_link" options.path="xpr/element/about.hbs"}}}
+            </p>
+
+            <div class="devon-example">
+            {{=<% %>=}}
+            <code>{{{XprElement bundlePath="about"}}}</code>
+            <%={{ }}=%>
+            <div><strong>Output:</strong></div>
+            {{{XprElement bundlePath="about"}}}
+            </div>
+
+            <!---------------------------------------->
+            <!---------------------------------------->
+
+            <h2 id="attached-data" class="content-subhead devon-strong">Attached Data</h2>
+            <img src="{{{WebRoot xpr.bundle}}}/img/content-management.jpeg"></img>
+            <div class="devon-caption">
+            <p><em>For these examples, we will be pulling data from bundles-demo.xpr.cloud's Content Management API's</em></p>
+            </div>
+            <li>
+                The Element rendering this page <code>(template.hbs)</code> can be viewed in GitHub here: {{{XprElement bundlePath="git_link" options.path="xpr/element/template.hbs"}}}
+            </li>
+            <li>
+                The configuration for this Element can be viewed in GitHub here: {{{XprElement bundlePath="git_link" options.path="xpr/element_config/template.json"}}}
+            </li>
+
+                {{=<% %>=}}
+            <p>An Element's configuration includes the Datasources attached, and any options to configure those Datasources. This <code>template</code> Element has a Datasource attached which uses the <code>datasource/articles_by_section.json</code> Datasource Definitionto populate the variable <code>{{PageArticles}}</code> for this Element.
+
+
+            <div class="devon-example">
+                <code>
+                {{#each PageArticles}}
+                    &ltli&gt {{Title}} &lt/li&gt
+                {{/each}}
+                </code>
+                <%={{ }}=%>
+                <ul>
+                {{#each PageArticles}}
+                <li>{{Title}}</li>
+                {{/each}}
+                </ul>
+            </div>
+
+            <!---------------------------------------->
+            <!---------------------------------------->
+
+            <h2 id="context-passing" class="content-subhead devon-strong">Context Passing</h2>
+            <p>
+                Elements can have data from the <code>root</code> (also known as <code>parent</code>) context passed into them to be rendered. Here we are going to loop over the same data as in the Attached Data context, but instead of rendering each article inline, pass the article to a sub Element for rendering. {{{XprElement bundlePath="git_link" options.path="xpr/element/details/article_details.hbs"}}}
+            </p>
+            <p>
+
+            <div class='devon-example'>
+            {{=<% %>=}}
+                <code>
+                {{#each PageArticles}}
+                    {{{XprElement bundlePath="details/article_details" context.Article=this}}}
+                {{/each}}
+                </code>
+                <%={{ }}=%>
+                </p>
+                <div><strong>Output:</strong></div>
+                {{#each PageArticles}}
+                {{{XprElement bundlePath="details/article_details" context.Article=this}}}
+                {{/each}}
+            </div>
+
+
+            <!---------------------------------------->
+            <!---------------------------------------->
+
+            <h2 id="element-options" class="content-subhead devon-strong">Element Options</h2>
+            <p>
+                "Sub" Elements can also have their own Datasources attached. While it is usually better to "fetch up front and pass down", sometimes you want an Element which controls and fetches its own data. Here we demonstrate an Element which will fetch an article based on Id, and we will use the <code>PageArticles</code> variable from the previous example to supply the list of Ids. </p>
+
+            <p><em>Note that we are "wasting" some effort here by refetching from the API, this is just an illustration</em></p>
+            </p>
+
+            <p>
+                These are the files in use for this demonstration, and an overview of the flow:
+                <ul>
+                    <li>
+                        This Element configuration file receives the <code>options</code> and passes <code>ArticleId</code> to the downstream Datasource: {{{XprElement bundlePath="git_link" options.path="xpr/element_config/details/article_details_fetching.json"}}}
+                    </li>
+                    <li>
+                        This Datasource receives <code>options.ArticleId</code> and uses it to parameterize an API call: {{{XprElement bundlePath="git_link" options.path="xpr/datasource/details/article_by_id.json"}}}
+                    </li>
+                    <li>
+                        Finally, this template renders the result of the Datasource: {{{XprElement bundlePath="git_link" options.path="xpr/element/details/article_details_fetching.hbs"}}}
+                    </li>
+                </ul>
+            </p>
+
+
+            <div class="devon-example">
+                <p>
+                {{=<% %>=}}
+                <code>
+                {{#each PageArticles}}
+                    {{{XprElement bundlePath="details/article_details_fetching" options.ArticleId=this.Id}}}
+                {{/each}}
+                </code>
+                <%={{ }}=%>
+                </p>
+                {{#each PageArticles}}
+                {{{XprElement bundlePath="details/article_details_fetching" options.ArticleId=this.Id}}}
+                {{/each}}
+            </div>
+
+            <!---------------------------------------->
+            <!---------------------------------------->
+
+            <h2 id="ssjs-binding" class="content-subhead devon-strong">SSJS - Bind Directly To Element</h2>
+            <p>
+
+            </p>
+            {{=<% %>=}}
+
+            <div class="devon-example">
+                <h4>Element Inclusion</h4>
+                <code>
+                {{{XprElement bundlePath="details/ssjs" options.message='Hello World!'}}}
+                </code>
+                <%={{ }}=%>
+                <h4>Element Configuration</h4>
+                {{{XprElement bundlePath="git_link" options.path="xpr/element_config/details/ssjs.json"}}}
+                {{=<% %>=}}
+                <code class="devon-small-code">
+{
+    "datasources": [
+        {
+            "__comment" : "Note that there is no 'path' specified for this Datasource, in Bundles 2 there is no need to create 'null' adapters when only requiring a script binding",
+            "name" : "script_output",
+            "scripts" : [
+                {
+                    "_comment" : "Notice the preceeding / in the path which resolves to the script in /server_js/simple_echo. If the path was set to 'simple_echo' with no preceeding /, it would look for a 'neighbor file' which would be in /server_js/details/simple_echo",
+                    "path" : "/simple_echo",
+                    "options" : {
+                        "message" : "{{options.message}}"
+                    }
+                }
+            ]
+        }
+    ]
+}
+                </code>
+                <%={{ }}=%>
+                <h4>Script</h4>
+                {{{XprElement bundlePath="git_link" options.path="xpr/server_js/simple_echo.js"}}}
+                <code class="devon-small-code">
+//this is a "simple echo" JS script to demonstrate binding scripts to Elements and Datasources.
+
+exports.process = function(context, options) {
+    return options["message"];
+}
+                </code>
+                <h4>Result</h4>
+                {{{XprElement bundlePath="details/ssjs" options.message='Hello World!'}}}
+            </div>
+
+
+            <h2 id="ssjs-binding-ds" class="content-subhead devon-strong">SSJS - Datasources & Modules</h2>
+            <p>
+            <em>Coming Soon...</em>
+            </p>
+            <h2 id="bundle-routes" class="content-subhead devon-strong">Bundle Routes</h2>
+            <p>
+                Bundle Routes are specified in the "routes.json" file at the root of the Bundle's <code>xpr</code> folder.
+                {{{XprElement bundlePath="git_link" options.path="xpr/routes.json"}}}
+
+                A route binds an endpoint (URL) and it's HTTP request verb to a script. and provides a formatter Element to render the result of the script.
+    
+            </p>
+            <p>
+                This demo shows an ajax GET route, running the same script but supplying different formatters: one for HTML and one for JSON.
+            </p>
+                <ul>
+                    <li>{{{XprElement bundlePath="git_link" options.path="xpr/routes.json"}}}</li>
+                    <li>{{{XprElement bundlePath="git_link" options.path="xpr/server_js/ajax/script.js"}}}</li>
+                    <li>{{{XprElement bundlePath="git_link" options.path="xpr/element/ajax/html_formatter.hbs"}}}</li>
+                    <li>{{{XprElement bundlePath="git_link" options.path="xpr/element/ajax/json_formatter.hbs"}}}</li>
+                </ul>
+
+
+                <div class='devon-example'>
+
+                    <div>
+                        <button id='test_html'>Test HTML Ajax</button>
+                        <p>
+                            Result:<span id="test_html_result"></span>
+                        </p>
+                        <button id='test_json'>Test JSON Ajax</button>
+                        <p>
+                            Result:<span id="test_json_result"></span>
+                        </p>
+                        <script>
+
+                        $(document).ready( function() {
+                            $("#test_html").click(function(){ 
+                                $.get("/__xpr__/pub_engine/bundles-demo/routes/ajax_example_html", function(data){
+                                    $("#test_html_result").html(data);
+                                });
+                            });
+                            $("#test_json").click(function(){ 
+                                $.get("/__xpr__/pub_engine/bundles-demo/routes/ajax_example_json", function(data){
+                                    $("#test_json_result").html("<pre>"+data+"</pre>");
+                                });
+                            });
+                        } );
+
+                        //$("#test_json").onClick(function(){ $.get("/__xpr__/pub_engine/bundles-demo/routes/ajax_example_json", function(data){$("#test_json_result").html(data));});
+                        //$("#test_html").onClick(function(){ $.get("/__xpr__/pub_engine/bundles-demo/routes/ajax_example_html", function(data){$("#test_html_result").html(data));});
+                        </script>
+                    </div>
+                </div>
+            </p>
+
+            
+        </div>
+    </div>
+</div>
+
+<script src="/__xpr__/pub_engine/{{xpr.bundle}}/web/js/ui.js"></script>
+</body>
+</html>
+
